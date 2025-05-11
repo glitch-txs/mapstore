@@ -1,10 +1,14 @@
 {
-  "name": "mapstore",
+  "name": "memomap",
   "version": "0.0.0",
   "description": "An extension of the class Map to use as a global Store.",
   "main": "dist/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "sideEffects": false,
+    "scripts": {
+      "build": "rm -rf dist && npx tsc",
+      "watch": "npx tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -21,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/glitch-txs/mapstore/issues"
   },
-  "homepage": "https://github.com/glitch-txs/mapstore#readme"
+  "homepage": "https://github.com/glitch-txs/mapstore#readme",
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
 }
