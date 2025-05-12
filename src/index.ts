@@ -17,7 +17,7 @@ export class Store<TStore extends Object> extends Map<K<TStore>, V<TStore>> {
     super(Object.entries(initialValues) as [K<TStore>, V<TStore>][])
   }
 
-  get<Key extends K<TStore>>(key: Key): TStore[Key] | undefined {
+  get<Key extends K<TStore>>(key: Key): TStore[Key] {
     return super.get(key) as TStore[Key];
   }
 
@@ -53,8 +53,7 @@ export class Store<TStore extends Object> extends Map<K<TStore>, V<TStore>> {
     }
   }
 
-  delete(key: K<TStore>): boolean {
+  unsubscribeAll(key: K<TStore>) {
     this.callbacks.delete(key)
-    return super.delete(key)
   }  
 }
