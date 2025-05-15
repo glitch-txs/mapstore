@@ -2,8 +2,7 @@ type K<T> = Extract<keyof T, string>
 type V<T> = T[Extract<keyof T, string>]
 
 export class Store<TStore extends Object> extends Map<K<TStore>, V<TStore>> {
-  private callbacks;
-  
+  private callbacks = new Map<K<TStore>, Set<(prev: V<TStore>)=> unknown>>()
   private onCallbacks(key: K<TStore>, value: V<TStore>){
     if(this.callbacks && this.callbacks.has(key))
     this.callbacks.get(key)?.forEach(callback => callback(value))
@@ -15,12 +14,8 @@ export class Store<TStore extends Object> extends Map<K<TStore>, V<TStore>> {
         throw new Error(`Invalid key "${key}"`)
       }
     }
-    super()
-    this.callbacks = new Map<K<TStore>, Set<(prev: V<TStore>)=> unknown>>()
-    
-    for (const [key, value] of Object.entries(initialValues) as [K<TStore>, V<TStore>][]) {
-      this.set(key, value)
-    }    
+  
+    super(Object.entries(initialValues) as [K<TStore>, V<TStore>][])
   }
 
   get<Key extends K<TStore>>(key: Key): TStore[Key] {
